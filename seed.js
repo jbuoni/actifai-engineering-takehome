@@ -8,13 +8,13 @@ const usersSqlInsert = fs.readFileSync("seedUsers.sql").toString();
 const salesSqlInsert = fs.readFileSync("seedSales.sql").toString();
 
 const pgclient = new Client({
-  host: 'db',
+  host: '0.0.0.0',
   port: '5432',
   user: 'user',
   password: 'pass',
   database: 'actifai'
 });
-
+console.log('connecting')
 pgclient.connect();
 
 // Create tables

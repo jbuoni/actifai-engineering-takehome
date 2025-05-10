@@ -3,12 +3,21 @@
   "version": "1.0.0",
   "description": "Node server for the Actifai Engineering takehome test.",
   "author": "Actifai Engineering",
-  "main": "server.js",
+  "main": "server.ts",
   "scripts": {
-    "start": "node server.js"
+    "start": "ts-node server.ts",
+    "typeorm": "typeorm-ts-node-commonjs"
   },
   "dependencies": {
+    "body-parser": "^2.2.0",
+    "dotenv": "^16.5.0",
     "express": "4.16.1",
     "pg": "8.7.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.17",
+    "@types/pg": "^8.15.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
   }
 }
