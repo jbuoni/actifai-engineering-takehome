@@ -1,39 +1,44 @@
-import { getSalesByDate, getSalesGroupedByTime } from '../db/sales';
+import { addSaleForUser, deleteSalesByUserId } from '../db/sales';
 import * as express from 'express';
 
 const router = express.Router();
 
-// Get sales data grouped by user and date
-router.get('/range/:startDate/:endDate', async (req, res) => {  
-    const { startDate, endDate } = req.params;
-    console.log(`Get sales data grouped by user for date range: ${startDate} to ${endDate}`);
+// Add a new sale for a user
+router.post('/add', async (req, res) => {
+    const { userId, amount, date } = req.body;
+
+    if (!userId || !amount || !date) {
+        return res.status(400).json({ error: 'Missing required fields: userId, amount, date' });
+    }
+
     try {
-        const salesData = await getSalesByDate(startDate, endDate);
-        res.json(salesData);
+        const newSale = await addSaleForUser(userId, amount, date);
+        res.status(201).json(newSale);
     } catch (error) {
-        console.error('Error fetching sales data:', error);
+        console.error('Error adding sale:', error);
         res.status(500).json({ error: 'Internal server error' });
     }
 });
 
+// Delete a sale by user ID
+router.delete('/delete/:saleId', async (req, res) => {
+    const { saleId } = req.params;
 
-// Get sales data grouped by user and date
-router.get('/:timeframe', async (req, res) => {  
-    const { timeframe } = req.params;
-    if (timeframe !== 'month' && timeframe !== 'year') {
-        return res.status(400).json({ error: 'Invalid timeframe. Use "month" or "year".' });
+    if ( !saleId) {
+        return res.status(400).json({ error: 'Missing required parameter saleId' });
     }
 
-    console.log(`Get sales data grouped by user and ${timeframe}`);
-
     try {
-        const salesData = await getSalesGroupedByTime(timeframe);
-        res.json(salesData);
+        const result = await deleteSalesByUserId(saleId);
+        if (result) {
+            res.status(200).json({ message: 'Sale deleted successfully' });
+        } else {
+            res.status(404).json({ error: 'Sale not found' });
+        }
     } catch (error) {
-        console.error('Error fetching sales data:', error);
+        console.error('Error deleting sale:', error);
         res.status(500).json({ error: 'Internal server error' });
     }
 });
-
 
 module.exports = router;
