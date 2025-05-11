@@ -53,7 +53,8 @@ describe('Sales Database Functions', () => {
             expect(mockClient.query).toHaveBeenCalledWith(`
         SELECT u.id, u.name,
             SUM(s.amount) as total_sales,
-            AVG(s.amount)::NUMERIC(10,2) AS avg_sales
+            AVG(s.amount)::NUMERIC(10,2) AS avg_sales,
+            COUNT(s.*) as num_sales
         FROM users u
         JOIN sales s ON u.id = s.user_id
         WHERE s.date BETWEEN '${startDate}' AND '${endDate}'
@@ -74,7 +75,8 @@ describe('Sales Database Functions', () => {
             expect(mockClient.query).toHaveBeenCalledWith(`
         SELECT u.id, u.name,
             SUM(s.amount) as total_sales,
-            AVG(s.amount)::NUMERIC(10,2) AS avg_sales
+            AVG(s.amount)::NUMERIC(10,2) AS avg_sales,
+            COUNT(s.*) as num_sales
         FROM users u
         JOIN sales s ON u.id = s.user_id
         WHERE s.date BETWEEN '${startDate}' AND '${endDate}'
@@ -131,7 +133,8 @@ describe('Sales Database Functions', () => {
         SELECT u.id, u.name,
             TO_CHAR(DATE_TRUNC('${timeframe}', s.date), 'YYYY-MM') AS sale_date,
             SUM(s.amount) AS total_sales,
-            AVG(s.amount)::NUMERIC(10,2) AS avg_sales
+            AVG(s.amount)::NUMERIC(10,2) AS avg_sales,
+            COUNT(s.*) as num_sales
         FROM users u
         JOIN sales s ON u.id = s.user_id
         WHERE u.id = ${userId}
@@ -156,7 +159,8 @@ describe('Sales Database Functions', () => {
         SELECT u.id, u.name,
             TO_CHAR(DATE_TRUNC('${timeframe}', s.date), 'YYYY') AS sale_date,
             SUM(s.amount) AS total_sales,
-            AVG(s.amount)::NUMERIC(10,2) AS avg_sales
+            AVG(s.amount)::NUMERIC(10,2) AS avg_sales,
+            COUNT(s.*) as num_sales
         FROM users u
         JOIN sales s ON u.id = s.user_id
         WHERE u.id = ${userId}
@@ -178,7 +182,8 @@ describe('Sales Database Functions', () => {
         SELECT u.id, u.name,
             TO_CHAR(DATE_TRUNC('${timeframe}', s.date), 'YYYY-MM') AS sale_date,
             SUM(s.amount) AS total_sales,
-            AVG(s.amount)::NUMERIC(10,2) AS avg_sales
+            AVG(s.amount)::NUMERIC(10,2) AS avg_sales,
+            COUNT(s.*) as num_sales
         FROM users u
         JOIN sales s ON u.id = s.user_id
         WHERE u.id = ${userId}
@@ -200,7 +205,8 @@ describe('Sales Database Functions', () => {
         SELECT u.id, u.name,
             TO_CHAR(DATE_TRUNC('${timeframe}', s.date), 'YYYY-MM') AS sale_date,
             SUM(s.amount) AS total_sales,
-            AVG(s.amount)::NUMERIC(10,2) AS avg_sales
+            AVG(s.amount)::NUMERIC(10,2) AS avg_sales,
+            COUNT(s.*) as num_sales
         FROM users u
         JOIN sales s ON u.id = s.user_id
         WHERE u.id = ${userId}
@@ -272,7 +278,8 @@ describe('Sales Database Functions', () => {
         SELECT u.id, u.name,
             TO_CHAR(DATE_TRUNC('${time}', s.date), 'YYYY-MM') AS sale_date,
             SUM(s.amount) AS total_sales,
-            AVG(s.amount)::NUMERIC(10,2) AS avg_sales
+            AVG(s.amount)::NUMERIC(10,2) AS avg_sales,
+            COUNT(s.*) as num_sales
         FROM users u
         JOIN sales s ON u.id = s.user_id
         GROUP BY u.id, u.name, sale_date
@@ -296,7 +303,8 @@ describe('Sales Database Functions', () => {
         SELECT u.id, u.name,
             TO_CHAR(DATE_TRUNC('${time}', s.date), 'YYYY') AS sale_date,
             SUM(s.amount) AS total_sales,
-            AVG(s.amount)::NUMERIC(10,2) AS avg_sales
+            AVG(s.amount)::NUMERIC(10,2) AS avg_sales,
+            COUNT(s.*) as num_sales
         FROM users u
         JOIN sales s ON u.id = s.user_id
         GROUP BY u.id, u.name, sale_date
@@ -316,7 +324,8 @@ describe('Sales Database Functions', () => {
         SELECT u.id, u.name,
             TO_CHAR(DATE_TRUNC('${time}', s.date), 'YYYY-MM') AS sale_date,
             SUM(s.amount) AS total_sales,
-            AVG(s.amount)::NUMERIC(10,2) AS avg_sales
+            AVG(s.amount)::NUMERIC(10,2) AS avg_sales,
+            COUNT(s.*) as num_sales
         FROM users u
         JOIN sales s ON u.id = s.user_id
         GROUP BY u.id, u.name, sale_date
@@ -336,7 +345,8 @@ describe('Sales Database Functions', () => {
         SELECT u.id, u.name,
             TO_CHAR(DATE_TRUNC('${time}', s.date), 'YYYY-MM') AS sale_date,
             SUM(s.amount) AS total_sales,
-            AVG(s.amount)::NUMERIC(10,2) AS avg_sales
+            AVG(s.amount)::NUMERIC(10,2) AS avg_sales,
+            COUNT(s.*) as num_sales
         FROM users u
         JOIN sales s ON u.id = s.user_id
         GROUP BY u.id, u.name, sale_date
@@ -362,7 +372,8 @@ describe('Sales Database Functions', () => {
         SELECT u.id, u.name,
             TO_CHAR(DATE_TRUNC('${time}', s.date), 'YYYY-MM') AS sale_date,
             SUM(s.amount) AS total_sales,
-            AVG(s.amount)::NUMERIC(10,2) AS avg_sales
+            AVG(s.amount)::NUMERIC(10,2) AS avg_sales,
+            COUNT(s.*) as num_sales
         FROM users u
         JOIN sales s ON u.id = s.user_id
         WHERE s.date >= '${startDate}'
@@ -388,7 +399,8 @@ describe('Sales Database Functions', () => {
         SELECT u.id, u.name,
             TO_CHAR(DATE_TRUNC('${time}', s.date), 'YYYY') AS sale_date,
             SUM(s.amount) AS total_sales,
-            AVG(s.amount)::NUMERIC(10,2) AS avg_sales
+            AVG(s.amount)::NUMERIC(10,2) AS avg_sales,
+            COUNT(s.*) as num_sales
         FROM users u
         JOIN sales s ON u.id = s.user_id
         WHERE s.date >= '${startDate}'
@@ -410,7 +422,8 @@ describe('Sales Database Functions', () => {
         SELECT u.id, u.name,
             TO_CHAR(DATE_TRUNC('${time}', s.date), 'YYYY-MM') AS sale_date,
             SUM(s.amount) AS total_sales,
-            AVG(s.amount)::NUMERIC(10,2) AS avg_sales
+            AVG(s.amount)::NUMERIC(10,2) AS avg_sales,
+            COUNT(s.*) as num_sales
         FROM users u
         JOIN sales s ON u.id = s.user_id
         WHERE s.date >= '${startDate}'
@@ -432,7 +445,8 @@ describe('Sales Database Functions', () => {
         SELECT u.id, u.name,
             TO_CHAR(DATE_TRUNC('${time}', s.date), 'YYYY-MM') AS sale_date,
             SUM(s.amount) AS total_sales,
-            AVG(s.amount)::NUMERIC(10,2) AS avg_sales
+            AVG(s.amount)::NUMERIC(10,2) AS avg_sales,
+            COUNT(s.*) as num_sales
         FROM users u
         JOIN sales s ON u.id = s.user_id
         WHERE s.date >= '${startDate}'
@@ -515,7 +529,8 @@ describe('Sales Database Functions', () => {
         SELECT g.name,
             TO_CHAR(DATE_TRUNC('${time}', s.date), 'YYYY-MM') AS sale_date,
             SUM(s.amount) AS total_sales,
-            AVG(s.amount)::NUMERIC(10,2) AS avg_sales
+            AVG(s.amount)::NUMERIC(10,2) AS avg_sales,
+            COUNT(s.*) as num_sales
         FROM sales s
         JOIN user_groups ug ON ug.user_id = s.user_id
         JOIN groups g ON g.id = ug.group_id
@@ -542,7 +557,8 @@ describe('Sales Database Functions', () => {
         SELECT g.name,
             TO_CHAR(DATE_TRUNC('${time}', s.date), 'YYYY') AS sale_date,
             SUM(s.amount) AS total_sales,
-            AVG(s.amount)::NUMERIC(10,2) AS avg_sales
+            AVG(s.amount)::NUMERIC(10,2) AS avg_sales,
+            COUNT(s.*) as num_sales
         FROM sales s
         JOIN user_groups ug ON ug.user_id = s.user_id
         JOIN groups g ON g.id = ug.group_id
@@ -565,7 +581,8 @@ describe('Sales Database Functions', () => {
         SELECT g.name,
             TO_CHAR(DATE_TRUNC('${time}', s.date), 'YYYY-MM') AS sale_date,
             SUM(s.amount) AS total_sales,
-            AVG(s.amount)::NUMERIC(10,2) AS avg_sales
+            AVG(s.amount)::NUMERIC(10,2) AS avg_sales,
+            COUNT(s.*) as num_sales
         FROM sales s
         JOIN user_groups ug ON ug.user_id = s.user_id
         JOIN groups g ON g.id = ug.group_id
@@ -588,7 +605,8 @@ describe('Sales Database Functions', () => {
         SELECT g.name,
             TO_CHAR(DATE_TRUNC('${time}', s.date), 'YYYY-MM') AS sale_date,
             SUM(s.amount) AS total_sales,
-            AVG(s.amount)::NUMERIC(10,2) AS avg_sales
+            AVG(s.amount)::NUMERIC(10,2) AS avg_sales,
+            COUNT(s.*) as num_sales
         FROM sales s
         JOIN user_groups ug ON ug.user_id = s.user_id
         JOIN groups g ON g.id = ug.group_id
@@ -615,7 +633,8 @@ describe('Sales Database Functions', () => {
             expect(mockClient.query).toHaveBeenCalledWith(`
         SELECT g.name,
             SUM(s.amount) as total_sales,
-            AVG(s.amount)::NUMERIC(10,2) AS avg_sales
+            AVG(s.amount)::NUMERIC(10,2) AS avg_sales,
+            COUNT(s.*) as num_sales
         FROM sales s
         JOIN user_groups ug ON ug.user_id = s.user_id
         JOIN groups g ON g.id = ug.group_id
@@ -637,7 +656,8 @@ describe('Sales Database Functions', () => {
             expect(mockClient.query).toHaveBeenCalledWith(`
         SELECT g.name,
             SUM(s.amount) as total_sales,
-            AVG(s.amount)::NUMERIC(10,2) AS avg_sales
+            AVG(s.amount)::NUMERIC(10,2) AS avg_sales,
+            COUNT(s.*) as num_sales
         FROM sales s
         JOIN user_groups ug ON ug.user_id = s.user_id
         JOIN groups g ON g.id = ug.group_id
@@ -659,7 +679,8 @@ describe('Sales Database Functions', () => {
             expect(mockClient.query).toHaveBeenCalledWith(`
         SELECT g.name,
             SUM(s.amount) as total_sales,
-            AVG(s.amount)::NUMERIC(10,2) AS avg_sales
+            AVG(s.amount)::NUMERIC(10,2) AS avg_sales,
+            COUNT(s.*) as num_sales
         FROM sales s
         JOIN user_groups ug ON ug.user_id = s.user_id
         JOIN groups g ON g.id = ug.group_id
@@ -687,7 +708,8 @@ describe('Sales Database Functions', () => {
         SELECT g.name,
             TO_CHAR(DATE_TRUNC('${time}', s.date), 'YYYY-MM') AS sale_date,
             SUM(s.amount) AS total_sales,
-            AVG(s.amount)::NUMERIC(10,2) AS avg_sales
+            AVG(s.amount)::NUMERIC(10,2) AS avg_sales,
+            COUNT(s.*) as num_sales
         FROM sales s
         JOIN user_groups ug ON ug.user_id = s.user_id
         JOIN groups g ON g.id = ug.group_id
@@ -712,7 +734,8 @@ describe('Sales Database Functions', () => {
         SELECT g.name,
             TO_CHAR(DATE_TRUNC('${time}', s.date), 'YYYY') AS sale_date,
             SUM(s.amount) AS total_sales,
-            AVG(s.amount)::NUMERIC(10,2) AS avg_sales
+            AVG(s.amount)::NUMERIC(10,2) AS avg_sales,
+            COUNT(s.*) as num_sales
         FROM sales s
         JOIN user_groups ug ON ug.user_id = s.user_id
         JOIN groups g ON g.id = ug.group_id
@@ -733,7 +756,8 @@ describe('Sales Database Functions', () => {
         SELECT g.name,
             TO_CHAR(DATE_TRUNC('${time}', s.date), 'YYYY-MM') AS sale_date,
             SUM(s.amount) AS total_sales,
-            AVG(s.amount)::NUMERIC(10,2) AS avg_sales
+            AVG(s.amount)::NUMERIC(10,2) AS avg_sales,
+            COUNT(s.*) as num_sales
         FROM sales s
         JOIN user_groups ug ON ug.user_id = s.user_id
         JOIN groups g ON g.id = ug.group_id
@@ -754,7 +778,8 @@ describe('Sales Database Functions', () => {
         SELECT g.name,
             TO_CHAR(DATE_TRUNC('${time}', s.date), 'YYYY-MM') AS sale_date,
             SUM(s.amount) AS total_sales,
-            AVG(s.amount)::NUMERIC(10,2) AS avg_sales
+            AVG(s.amount)::NUMERIC(10,2) AS avg_sales,
+            COUNT(s.*) as num_sales
         FROM sales s
         JOIN user_groups ug ON ug.user_id = s.user_id
         JOIN groups g ON g.id = ug.group_id
@@ -782,7 +807,8 @@ describe('Sales Database Functions', () => {
         SELECT g.name,
             TO_CHAR(DATE_TRUNC('${timeframe}', s.date), 'YYYY-MM') AS sale_date,
             SUM(s.amount) AS total_sales,
-            AVG(s.amount)::NUMERIC(10,2) AS avg_sales
+            AVG(s.amount)::NUMERIC(10,2) AS avg_sales,
+            COUNT(s.*) as num_sales
         FROM sales s
         JOIN user_groups ug ON ug.user_id = s.user_id
         JOIN groups g ON g.id = ug.group_id
@@ -808,7 +834,8 @@ describe('Sales Database Functions', () => {
         SELECT g.name,
             TO_CHAR(DATE_TRUNC('${timeframe}', s.date), 'YYYY') AS sale_date,
             SUM(s.amount) AS total_sales,
-            AVG(s.amount)::NUMERIC(10,2) AS avg_sales
+            AVG(s.amount)::NUMERIC(10,2) AS avg_sales,
+            COUNT(s.*) as num_sales
         FROM sales s
         JOIN user_groups ug ON ug.user_id = s.user_id
         JOIN groups g ON g.id = ug.group_id
@@ -831,7 +858,8 @@ describe('Sales Database Functions', () => {
         SELECT g.name,
             TO_CHAR(DATE_TRUNC('${timeframe}', s.date), 'YYYY-MM') AS sale_date,
             SUM(s.amount) AS total_sales,
-            AVG(s.amount)::NUMERIC(10,2) AS avg_sales
+            AVG(s.amount)::NUMERIC(10,2) AS avg_sales,
+            COUNT(s.*) as num_sales
         FROM sales s
         JOIN user_groups ug ON ug.user_id = s.user_id
         JOIN groups g ON g.id = ug.group_id
