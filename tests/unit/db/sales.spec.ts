@@ -9,6 +9,7 @@ import {
     getSalesAfterDate,
     getSalesByDate,
     getSalesByGroupId,
+    getSalesByGroupIdTimeframe,
     getSalesByUserId,
     getSalesByUserIdTimeframe,
     getSalesGroupedByTime
@@ -135,7 +136,7 @@ describe('Sales Database Functions', () => {
         JOIN sales s ON u.id = s.user_id
         WHERE u.id = ${userId}
         GROUP BY u.id, u.name, sale_date
-        ORDER BY sale_date DESC
+        ORDER BY sale_date ASC
     `);
             expect(result).toEqual(mockRows);
         });
@@ -160,7 +161,7 @@ describe('Sales Database Functions', () => {
         JOIN sales s ON u.id = s.user_id
         WHERE u.id = ${userId}
         GROUP BY u.id, u.name, sale_date
-        ORDER BY sale_date DESC
+        ORDER BY sale_date ASC
     `);
             expect(result).toEqual(mockRows);
         });
@@ -182,7 +183,7 @@ describe('Sales Database Functions', () => {
         JOIN sales s ON u.id = s.user_id
         WHERE u.id = ${userId}
         GROUP BY u.id, u.name, sale_date
-        ORDER BY sale_date DESC
+        ORDER BY sale_date ASC
     `);
             expect(result).toEqual([]);
         });
@@ -204,7 +205,7 @@ describe('Sales Database Functions', () => {
         JOIN sales s ON u.id = s.user_id
         WHERE u.id = ${userId}
         GROUP BY u.id, u.name, sale_date
-        ORDER BY sale_date DESC
+        ORDER BY sale_date ASC
     `);
         });
     });
@@ -275,7 +276,7 @@ describe('Sales Database Functions', () => {
         FROM users u
         JOIN sales s ON u.id = s.user_id
         GROUP BY u.id, u.name, sale_date
-        ORDER BY sale_date DESC
+        ORDER BY sale_date ASC
     `);
             expect(result).toEqual(mockRows);
         });
@@ -299,7 +300,7 @@ describe('Sales Database Functions', () => {
         FROM users u
         JOIN sales s ON u.id = s.user_id
         GROUP BY u.id, u.name, sale_date
-        ORDER BY sale_date DESC
+        ORDER BY sale_date ASC
     `);
             expect(result).toEqual(mockRows);
         });
@@ -319,7 +320,7 @@ describe('Sales Database Functions', () => {
         FROM users u
         JOIN sales s ON u.id = s.user_id
         GROUP BY u.id, u.name, sale_date
-        ORDER BY sale_date DESC
+        ORDER BY sale_date ASC
     `);
             expect(result).toEqual([]);
         });
@@ -339,7 +340,7 @@ describe('Sales Database Functions', () => {
         FROM users u
         JOIN sales s ON u.id = s.user_id
         GROUP BY u.id, u.name, sale_date
-        ORDER BY sale_date DESC
+        ORDER BY sale_date ASC
     `);
         });
     });
@@ -366,7 +367,7 @@ describe('Sales Database Functions', () => {
         JOIN sales s ON u.id = s.user_id
         WHERE s.date >= '${startDate}'
         GROUP BY u.id, u.name, sale_date
-        ORDER BY sale_date DESC
+        ORDER BY sale_date ASC
     `);
             expect(result).toEqual(mockRows);
         });
@@ -392,7 +393,7 @@ describe('Sales Database Functions', () => {
         JOIN sales s ON u.id = s.user_id
         WHERE s.date >= '${startDate}'
         GROUP BY u.id, u.name, sale_date
-        ORDER BY sale_date DESC
+        ORDER BY sale_date ASC
     `);
             expect(result).toEqual(mockRows);
         });
@@ -414,7 +415,7 @@ describe('Sales Database Functions', () => {
         JOIN sales s ON u.id = s.user_id
         WHERE s.date >= '${startDate}'
         GROUP BY u.id, u.name, sale_date
-        ORDER BY sale_date DESC
+        ORDER BY sale_date ASC
     `);
             expect(result).toEqual([]);
         });
@@ -436,7 +437,7 @@ describe('Sales Database Functions', () => {
         JOIN sales s ON u.id = s.user_id
         WHERE s.date >= '${startDate}'
         GROUP BY u.id, u.name, sale_date
-        ORDER BY sale_date DESC
+        ORDER BY sale_date ASC
     `);
         });
     });
@@ -458,7 +459,7 @@ describe('Sales Database Functions', () => {
     JOIN user_groups ug ON ug.user_id = s.user_id
     JOIN groups g ON g.id = ug.group_id
     WHERE g.id = ${groupId}
-    ORDER BY s.date DESC
+    ORDER BY s.date ASC
     `);
             expect(result).toEqual(mockRows);
         });
@@ -475,7 +476,7 @@ describe('Sales Database Functions', () => {
     JOIN user_groups ug ON ug.user_id = s.user_id
     JOIN groups g ON g.id = ug.group_id
     WHERE g.id = ${groupId}
-    ORDER BY s.date DESC
+    ORDER BY s.date ASC
     `);
             expect(result).toEqual([]);
         });
@@ -492,7 +493,7 @@ describe('Sales Database Functions', () => {
     JOIN user_groups ug ON ug.user_id = s.user_id
     JOIN groups g ON g.id = ug.group_id
     WHERE g.id = ${groupId}
-    ORDER BY s.date DESC
+    ORDER BY s.date ASC
     `);
         });
     });
@@ -520,7 +521,7 @@ describe('Sales Database Functions', () => {
         JOIN groups g ON g.id = ug.group_id
         WHERE s.date >= '${startDate}'
         GROUP BY g.name, sale_date
-        ORDER BY sale_date DESC
+        ORDER BY sale_date ASC
     `);
             expect(result).toEqual(mockRows);
         });
@@ -547,7 +548,7 @@ describe('Sales Database Functions', () => {
         JOIN groups g ON g.id = ug.group_id
         WHERE s.date >= '${startDate}'
         GROUP BY g.name, sale_date
-        ORDER BY sale_date DESC
+        ORDER BY sale_date ASC
     `);
             expect(result).toEqual(mockRows);
         });
@@ -570,7 +571,7 @@ describe('Sales Database Functions', () => {
         JOIN groups g ON g.id = ug.group_id
         WHERE s.date >= '${startDate}'
         GROUP BY g.name, sale_date
-        ORDER BY sale_date DESC
+        ORDER BY sale_date ASC
     `);
             expect(result).toEqual([]);
         });
@@ -593,7 +594,7 @@ describe('Sales Database Functions', () => {
         JOIN groups g ON g.id = ug.group_id
         WHERE s.date >= '${startDate}'
         GROUP BY g.name, sale_date
-        ORDER BY sale_date DESC
+        ORDER BY sale_date ASC
     `);
         });
     });
@@ -691,7 +692,7 @@ describe('Sales Database Functions', () => {
         JOIN user_groups ug ON ug.user_id = s.user_id
         JOIN groups g ON g.id = ug.group_id
         GROUP BY g.name, sale_date
-        ORDER BY sale_date DESC
+        ORDER BY sale_date ASC
     `);
             expect(result).toEqual(mockRows);
         });
@@ -716,7 +717,7 @@ describe('Sales Database Functions', () => {
         JOIN user_groups ug ON ug.user_id = s.user_id
         JOIN groups g ON g.id = ug.group_id
         GROUP BY g.name, sale_date
-        ORDER BY sale_date DESC
+        ORDER BY sale_date ASC
     `);
             expect(result).toEqual(mockRows);
         });
@@ -737,7 +738,7 @@ describe('Sales Database Functions', () => {
         JOIN user_groups ug ON ug.user_id = s.user_id
         JOIN groups g ON g.id = ug.group_id
         GROUP BY g.name, sale_date
-        ORDER BY sale_date DESC
+        ORDER BY sale_date ASC
     `);
             expect(result).toEqual([]);
         });
@@ -758,7 +759,85 @@ describe('Sales Database Functions', () => {
         JOIN user_groups ug ON ug.user_id = s.user_id
         JOIN groups g ON g.id = ug.group_id
         GROUP BY g.name, sale_date
-        ORDER BY sale_date DESC
+        ORDER BY sale_date ASC
+    `);
+        });
+    });
+
+
+    describe('getSalesByGroupIdTimeframe', () => {
+        it('should return sales data grouped by month for the specified group ID', async () => {
+            const mockRows = [
+                { name: 'Group A', sale_date: '2023-01', total_sales: 300, avg_sales: 150 },
+                { name: 'Group A', sale_date: '2023-02', total_sales: 400, avg_sales: 200 },
+            ];
+            const mock = jest.spyOn(mockClient, 'query');
+            mock.mockImplementation(() => Promise.resolve({ rows: mockRows }));
+
+            const groupId = '1';
+            const timeframe = 'month';
+            const result = await getSalesByGroupIdTimeframe(groupId, timeframe);
+
+            expect(mockClient.query).toHaveBeenCalledWith(`
+        SELECT g.name,
+            TO_CHAR(DATE_TRUNC('${timeframe}', s.date), 'YYYY-MM') AS sale_date,
+            SUM(s.amount) AS total_sales,
+            AVG(s.amount)::NUMERIC(10,2) AS avg_sales
+        FROM sales s
+        JOIN user_groups ug ON ug.user_id = s.user_id
+        JOIN groups g ON g.id = ug.group_id
+        WHERE g.id = ${groupId}
+        GROUP BY g.name, sale_date
+        ORDER BY sale_date ASC
+    `);
+            expect(result).toEqual(mockRows);
+        });
+
+        it('should return sales data grouped by year for the specified group ID', async () => {
+            const mockRows = [
+                { name: 'Group A', sale_date: '2023', total_sales: 700, avg_sales: 350 },
+            ];
+            const mock = jest.spyOn(mockClient, 'query');
+            mock.mockImplementation(() => Promise.resolve({ rows: mockRows }));
+
+            const groupId = '1';
+            const timeframe = 'year';
+            const result = await getSalesByGroupIdTimeframe(groupId, timeframe);
+
+            expect(mockClient.query).toHaveBeenCalledWith(`
+        SELECT g.name,
+            TO_CHAR(DATE_TRUNC('${timeframe}', s.date), 'YYYY') AS sale_date,
+            SUM(s.amount) AS total_sales,
+            AVG(s.amount)::NUMERIC(10,2) AS avg_sales
+        FROM sales s
+        JOIN user_groups ug ON ug.user_id = s.user_id
+        JOIN groups g ON g.id = ug.group_id
+        WHERE g.id = ${groupId}
+        GROUP BY g.name, sale_date
+        ORDER BY sale_date ASC
+    `);
+            expect(result).toEqual(mockRows);
+        });
+
+        it('should handle database query errors gracefully', async () => {
+            const mock = jest.spyOn(mockClient, 'query');
+            mock.mockImplementation(() => Promise.reject(new Error('Database error')));
+
+            const groupId = '1';
+            const timeframe = 'month';
+
+            await expect(getSalesByGroupIdTimeframe(groupId, timeframe)).rejects.toThrow('Database error');
+            expect(mockClient.query).toHaveBeenCalledWith(`
+        SELECT g.name,
+            TO_CHAR(DATE_TRUNC('${timeframe}', s.date), 'YYYY-MM') AS sale_date,
+            SUM(s.amount) AS total_sales,
+            AVG(s.amount)::NUMERIC(10,2) AS avg_sales
+        FROM sales s
+        JOIN user_groups ug ON ug.user_id = s.user_id
+        JOIN groups g ON g.id = ug.group_id
+        WHERE g.id = ${groupId}
+        GROUP BY g.name, sale_date
+        ORDER BY sale_date ASC
     `);
         });
     });

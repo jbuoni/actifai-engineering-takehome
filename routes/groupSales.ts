@@ -4,15 +4,16 @@ import {
     getGroupSalesAfterDate,
     getGroupSalesByDate,
     getSalesByGroupId, 
-    getGroupSalesGroupedByTime
+    getGroupSalesGroupedByTime,
+    getSalesByGroupIdTimeframe
 } from '../db/sales';
 import * as express from 'express';
 
 const router = express.Router();
 
 // Get sales by group
-router.get('/:groupId', async (req, res) => {
-    const groupId = req.params.userId;
+router.get('/group/:groupId', async (req, res) => {
+    const groupId = req.params.groupId;
     console.log(`Get sales data for group: ${groupId}`);
     try {
         const salesData = await getSalesByGroupId(groupId);
@@ -22,6 +23,19 @@ router.get('/:groupId', async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 })
+
+router.get('/group/:groupId/:timeframe', async (req, res) => {
+    const { groupId, timeframe } = req.params;
+    console.log(`Get sales data for user: ${groupId} for timeframe: ${timeframe}`);
+    try {
+        const salesData = await getSalesByGroupIdTimeframe(groupId, timeframe);
+        res.json(salesData);
+    } catch (error) {
+        console.error('Error fetching sales data:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+})
+
 
 // Get sales data grouped by user after start date
 router.get('/after/:startDate/:timeframe', async (req, res) => {  

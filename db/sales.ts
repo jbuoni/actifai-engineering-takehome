@@ -21,7 +21,7 @@ const getSalesByUserIdTimeframe = async (userId: string, timeframe: 'month' | 'y
         JOIN sales s ON u.id = s.user_id
         WHERE u.id = ${userId}
         GROUP BY u.id, u.name, sale_date
-        ORDER BY sale_date DESC
+        ORDER BY sale_date ASC
     `;
     const result = await pool.query(query);
     return result.rows;
@@ -77,7 +77,7 @@ const getSalesGroupedByTime = async (time: 'month' | 'year') => {
         FROM users u
         JOIN sales s ON u.id = s.user_id
         GROUP BY u.id, u.name, sale_date
-        ORDER BY sale_date DESC
+        ORDER BY sale_date ASC
     `;
 
     const result = await pool.query(query);
@@ -96,7 +96,7 @@ const getSalesAfterDate = async (startDate: string, time: 'month' | 'year') => {
         JOIN sales s ON u.id = s.user_id
         WHERE s.date >= '${startDate}'
         GROUP BY u.id, u.name, sale_date
-        ORDER BY sale_date DESC
+        ORDER BY sale_date ASC
     `;
     const result = await pool.query(query);
     return result.rows;
@@ -108,13 +108,13 @@ const getSalesByGroupId = async (groupId: string) => {
     JOIN user_groups ug ON ug.user_id = s.user_id
     JOIN groups g ON g.id = ug.group_id
     WHERE g.id = ${groupId}
-    ORDER BY s.date DESC
+    ORDER BY s.date ASC
     `
     const result = await pool.query(query);
     return result.rows;
 }
 
-const getSalesByGroupIdTimeframe = async (userId: string, timeframe: 'month' | 'year') => {
+const getSalesByGroupIdTimeframe = async (groupId: string, timeframe: 'month' | 'year') => {
     const timeFormat = getTimeFormat(timeframe);
     const query = `
         SELECT g.name,
@@ -124,9 +124,9 @@ const getSalesByGroupIdTimeframe = async (userId: string, timeframe: 'month' | '
         FROM sales s
         JOIN user_groups ug ON ug.user_id = s.user_id
         JOIN groups g ON g.id = ug.group_id
-        WHERE u.id = ${userId}
-        GROUP BY u.id, u.name, sale_date
-        ORDER BY sale_date DESC
+        WHERE g.id = ${groupId}
+        GROUP BY g.name, sale_date
+        ORDER BY sale_date ASC
     `;
     const result = await pool.query(query);
     return result.rows;
@@ -145,7 +145,7 @@ const getGroupSalesAfterDate = async (startDate: string, time: 'month' | 'year')
         JOIN groups g ON g.id = ug.group_id
         WHERE s.date >= '${startDate}'
         GROUP BY g.name, sale_date
-        ORDER BY sale_date DESC
+        ORDER BY sale_date ASC
     `;
 
     const result = await pool.query(query);
@@ -182,7 +182,7 @@ const getGroupSalesGroupedByTime = async (time: 'month' | 'year') => {
         JOIN user_groups ug ON ug.user_id = s.user_id
         JOIN groups g ON g.id = ug.group_id
         GROUP BY g.name, sale_date
-        ORDER BY sale_date DESC
+        ORDER BY sale_date ASC
     `;
 
     const result = await pool.query(query);
