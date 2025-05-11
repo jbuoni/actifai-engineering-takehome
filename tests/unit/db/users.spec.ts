@@ -34,11 +34,12 @@ describe('db/users', () => {
         it('should fetch a user by id', async () => {
             const mockUser = { id: '1', name: 'John Doe', role: 'admin' };
             const mock = jest.spyOn(mockClient, 'query');
-            mock.mockImplementation(() => Promise.resolve([mockUser]));
+            mock.mockImplementation(() => Promise.resolve({ rows: [mockUser] }));
 
-            await getUserById('1');
+            const result = await getUserById('1');
 
             expect(mockClient.query).toHaveBeenCalledWith('SELECT * FROM users WHERE id = 1');
+            expect(result).toEqual(mockUser);
 
         });
     });

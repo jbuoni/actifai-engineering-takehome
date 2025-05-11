@@ -1,21 +1,13 @@
 import { pool } from './pool';
 
 const getUserById = async (id: string) => {
-    try {
-        const res = await pool.query(`SELECT * FROM users WHERE id = ${id}`)
-        return res?.rows[0]
-    } catch (err) {
-        console.error(err)
-    }
+    const res = await pool.query(`SELECT * FROM users WHERE id = ${id}`)
+    return res?.rows[0]
 }
 
 const getUsers = async() => {
-    try {
-        const res = await pool.query('SELECT * FROM users ORDER BY id ASC')
-        return res?.rows
-    } catch (err) {
-        console.error(err)
-    }
+    const res = await pool.query('SELECT * FROM users ORDER BY id ASC')
+    return res?.rows
 }
 
 const getUserByName = async (name: string) => {
@@ -50,7 +42,7 @@ const updateUser = async (id: string, name: string, role: string) => {
 }
 
 const deleteUser = async (id: string) => {
-    const res = await pool.query(`DELETE FROM users WHERE id = ${id}`);
+    await pool.query(`DELETE FROM users WHERE id = ${id}`);
 }
 
 export {

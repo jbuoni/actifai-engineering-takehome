@@ -3,20 +3,29 @@ import { updateUser, addUser, getUserById, getUsers, deleteUser } from '../db/us
 
 const router = express.Router();
 
-
 // Get all users
 router.get('/', async (req, res) => {
     console.log('Get all users');
-    const users = await getUsers()
-    res.send(users);
+    try {
+        const users = await getUsers()
+        res.send(users);
+    } catch (error) {
+        console.error('Error getting users:', error);
+        return res.status(500).send(`Error getting users:${JSON.stringify(error)}`);
+    }
 });
 
 // Get a single user by ID
 router.get('/:id', async (req, res) => {
     console.log(`Get user by id: ${req.params.id}`);
     const userId = req.params.id;
-    const user = await getUserById(userId);
-    res.send(user);
+    try {
+        const user = await getUserById(userId);
+        res.send(user);
+    } catch (error) {
+        console.error('Error getting user:', error);
+        return res.status(500).send(`Error getting user:${JSON.stringify(error)}`);
+    }
 });
 
 // Create a new user
@@ -24,7 +33,7 @@ router.post('/', async (req, res) => {
     const { name, role } = req.body;
 
     if (!name || ! role) {
-        return res.status(400).send('Name amd role are required');
+        return res.status(400).send('Name and role are required');
     }
     
     console.log(`Create user with name: ${name}`);
@@ -58,11 +67,11 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
     const userId = req.params.id;
     try {
-        const user = await deleteUser(userId);
+        await deleteUser(userId);
         res.send(`Delete user with ID: ${userId}`);
     } catch (error) {
-        console.error('Error updating user:', error);
-        return res.status(500).send(`Error updating user:${JSON.stringify(error)}`);
+        console.error('Error deleting user:', error);
+        return res.status(500).send(`Error deleting user:${JSON.stringify(error)}`);
     }
 });
 
