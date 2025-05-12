@@ -7,9 +7,10 @@ import {
     getGroupSalesGroupedByTime,
     getSalesByGroupIdTimeframe
 } from '../db/sales';
-import * as express from 'express';
 
-const router = express.Router();
+import { Router } from 'express';
+
+const router = Router();
 
 // Get sales by group
 router.get('/group/:groupId', async (req, res) => {

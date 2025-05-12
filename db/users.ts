@@ -20,7 +20,6 @@ const getUserByName = async (name: string) => {
 }
 
 const addUser = async (name: string, role: string) => {
-    console.log(`INSERT INTO users (name, role) VALUES ('${name}', '${role}') RETURNING *`)
     const res = await pool.query(`INSERT INTO users (id, name, role) VALUES (nextval(pg_get_serial_sequence('users', 'id')), '${name}', '${role}') RETURNING *`);
     return res?.rows[0];
 };

@@ -8,6 +8,7 @@ import * as bodyParser from 'body-parser';
 import * as UserRoutes from './routes/user';
 import * as SalesRoutes from './routes/sales';
 import * as GroupRoutes from './routes/groups';
+import * as ReportsRoutes from './routes/reports';
 import * as GroupSalesRoutes from './routes/groupSales';
 import * as AgentSalesRoutes from './routes/agentSales';
 
@@ -35,6 +36,7 @@ async function start() {
   app.use('/users', UserRoutes);
   app.use('/sales', SalesRoutes);
   app.use('/groups', GroupRoutes);
+  app.use('/reports', ReportsRoutes);
   app.use('/sales/agents', AgentSalesRoutes);
   app.use('/sales/groups', GroupSalesRoutes);
 

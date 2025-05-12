@@ -1,7 +1,8 @@
 import { addSaleForUser, deleteSalesByUserId } from '../db/sales';
-import * as express from 'express';
 
-const router = express.Router();
+import { Router } from 'express';
+
+const router = Router();
 
 // Add a new sale for a user
 router.post('/add', async (req, res) => {

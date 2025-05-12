@@ -133,6 +133,7 @@ const getSalesByGroupIdTimeframe = async (groupId: string, timeframe: 'month' | 
         GROUP BY g.name, sale_date
         ORDER BY sale_date ASC
     `;
+
     const result = await pool.query(query);
     return result.rows;
 }

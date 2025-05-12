@@ -1,4 +1,11 @@
-import { addGroup, deleteGroup, getGroupById, getGroups, updateGroup } from '../db/groups';
+import {
+    addGroup,
+    addUserToGroup,
+    deleteGroup,
+    getGroupById,
+    getGroups,
+    updateGroup
+} from '../db/groups';
 import * as express from 'express';
 
 const router = express.Router();
@@ -73,6 +80,18 @@ router.delete('/:id', async (req, res) => {
     } catch (error) {
         console.error('Error deleting group:', error);
         return res.status(500).send(`Error deleting group:${JSON.stringify(error)}`);
+    }
+});
+
+router.post('/:groupId/add/user/:userId/', async (req, res) => {
+    const { groupId, userId } = req.params;
+    console.log(`Add user with id ${userId} to group with id ${groupId}`);
+    try {
+        const group = await addUserToGroup(groupId, userId);
+        res.send(`Added user with ID: ${userId} to group with ID: ${groupId}`);
+    } catch (error) {
+        console.error('Error adding user to group:', error);
+        return res.status(500).send(`Error adding user to group:${JSON.stringify(error)}`);
     }
 });
 

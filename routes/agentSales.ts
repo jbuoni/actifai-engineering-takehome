@@ -1,9 +1,9 @@
 import { createReturnByDate } from '../lib/salesHelpers';
 import { getSalesByDate, getSalesGroupedByTime, getSalesAfterDate, getSalesByUserId, getSalesByUserIdTimeframe } from '../db/sales';
-import * as express from 'express';
-import { time } from 'console';
 
-const router = express.Router();
+import { Router } from 'express';
+
+const router = Router();
 
 router.get('/user/:userId', async (req, res) => {
     const userId = req.params.userId;

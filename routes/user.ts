@@ -1,7 +1,8 @@
-import * as express from 'express';
 import { updateUser, addUser, getUserById, getUsers, deleteUser } from '../db/users';
 
-const router = express.Router();
+import { Router } from 'express';
+
+const router = Router();
 
 // Get all users
 router.get('/', async (req, res) => {
