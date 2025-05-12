@@ -1,9 +1,8 @@
 'use strict';
 
-require('dotenv').config();
-
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
+import * as dotenv from 'dotenv';
 
 import * as UserRoutes from './routes/user';
 import * as SalesRoutes from './routes/sales';
@@ -12,7 +11,9 @@ import * as ReportsRoutes from './routes/reports';
 import * as GroupSalesRoutes from './routes/groupSales';
 import * as AgentSalesRoutes from './routes/agentSales';
 
-const seeder = require('./seed');
+dotenv.config();
+
+const seeder = require('./seed'); // eslint-disable-line
 
 // Constants
 const PORT = process.env['PORT'];

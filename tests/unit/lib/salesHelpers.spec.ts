@@ -17,7 +17,7 @@ describe('createReturnByDate', () => {
     });
 
     it('should return an empty object for an empty input array', () => {
-        const input: any[] = [];
+        const input = [];
         const expectedOutput = {};
 
         const result = createReturnByDate(input);

@@ -6,6 +6,7 @@ import {
     getGroups,
     updateGroup
 } from '../db/groups';
+
 import * as express from 'express';
 
 const router = express.Router();
@@ -88,7 +89,7 @@ router.post('/:groupId/add/user/:userId/', async (req, res) => {
     console.log(`Add user with id ${userId} to group with id ${groupId}`);
     try {
         const group = await addUserToGroup(groupId, userId);
-        res.send(`Added user with ID: ${userId} to group with ID: ${groupId}`);
+        res.send(`Added user with ID: ${userId} to group with ID: ${groupId}, Data: ${JSON.stringify(group)}`);
     } catch (error) {
         console.error('Error adding user to group:', error);
         return res.status(500).send(`Error adding user to group:${JSON.stringify(error)}`);

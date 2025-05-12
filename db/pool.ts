@@ -1,6 +1,8 @@
 import { Pool } from 'pg'
 
-require('dotenv').config();
+import * as dotenv from 'dotenv';
+
+dotenv.config();
 
 const db_config = {
     host: process.env['POSTGRES_HOST'],
@@ -16,7 +18,7 @@ const db_config = {
 
 const pool = new Pool(db_config);
 
-pool.on('error', (err, client) => {
+pool.on('error', (err) => {
     console.error('Unexpected error on idle client', err)
     process.exit(-1)
 })

@@ -1,4 +1,4 @@
-import { getGroupSalesGroupedByTime, getSalesByGroupIdTimeframe, getSalesByUserIdTimeframe } from "../db/sales";
+import { getSalesByGroupIdTimeframe, getSalesByUserIdTimeframe } from "../db/sales";
 
 
 const _getSalesFilteredByYear = (salesData, year) => {

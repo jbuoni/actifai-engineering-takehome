@@ -27,7 +27,7 @@ router.get('/user/:userId/:year', async (req, res) => {
         const report = await comprehensiveUserReport(user, userSales, userGroups, year);
 
         res.status(200).json({ success: true, data: report });
-    } catch (error) {
+    } catch (error) { //eslint-disable-line
         res.status(500).json({ success: false, message: `Failed to fetch reports` });
     }
 });
@@ -52,7 +52,7 @@ router.get('/group/:groupId/:year', async (req, res) => {
         const report = await comprehensiveGroupReport(group, groupSales, usersWithSales, year);
 
         res.status(200).json({ success: true, data: report });
-    } catch (error) {
+    } catch (eror) { //eslint-disable-line
         res.status(500).json({ success: false, message: 'Failed to fetch group reports' });
     }
 });

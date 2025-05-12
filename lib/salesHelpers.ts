@@ -1,4 +1,4 @@
-const createReturnByDate = (inputJson: any[]) => {
+const createReturnByDate = (inputJson) => {
     const formatted = {}
 
     inputJson.forEach(item => {

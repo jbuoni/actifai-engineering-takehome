@@ -47,7 +47,6 @@ describe('Group DB Operations', () => {
     describe('addGroup', () => {
         it('should create a new group and return it', async () => {
             const newGroup = 'New Group';
-            const mockGroup = { id: 1, name: newGroup };
             const mock = jest.spyOn(mockClient, 'query');
             mock.mockImplementation(() => Promise.resolve({ rows: [] }));
 
